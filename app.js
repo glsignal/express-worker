@@ -11,11 +11,16 @@ var users = require('./routes/users');
 var app = express();
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+var hbs = require('express-hbs');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(__dirname + '/public/favicon.ico'));
+// Use `.hbs` for extensions and find partials in `views/partials`.
+app.engine('hbs', hbs.express4({
+  partialsDir: path.join(__dirname, 'views', 'partials'),
+  defaultLayout: path.join(__dirname, 'views', 'layout.hbs')
+}));
+app.set('view engine', 'hbs');
+app.set('views', path.join(__dirname, 'views'));
+
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
